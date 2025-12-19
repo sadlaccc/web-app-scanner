@@ -559,7 +559,10 @@ st.set_page_config(
     page_title="Web Application Security Scanner",
     page_icon="🔒",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
+    menu_items={
+        'About': "Advanced Web Application Security Scanner with subdomain enumeration and vulnerability assessment."
+    }
 )
 
 # Custom CSS for modern styling
@@ -972,6 +975,201 @@ st.markdown("""
     label {
         color: var(--text-secondary) !important;
     }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .main-header {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modern-card {
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .input-container {
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .stTextInput > div > div > input {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+        }
+        
+        .stButton > button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+        
+        .sidebar-content {
+            padding: 1rem;
+        }
+        
+        .footer {
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        /* Stack columns on mobile */
+        .stColumns {
+            flex-direction: column !important;
+        }
+        
+        .stColumns > div {
+            width: 100% !important;
+            margin-bottom: 1rem;
+        }
+        
+        /* Adjust subdomain display for mobile */
+        .subdomain-item {
+            padding: 0.5rem 0.75rem;
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+        
+        /* Make tables responsive */
+        .stDataFrame, .stTable {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        
+        /* Adjust progress bars for mobile */
+        .stProgress {
+            height: 8px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .main-header {
+            font-size: 2rem;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+        }
+        
+        .modern-card {
+            padding: 1rem;
+        }
+        
+        .input-container {
+            padding: 1rem;
+        }
+        
+        .stTextInput > div > div > input {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        .stButton > button {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .sidebar-content {
+            padding: 0.75rem;
+        }
+        
+        .footer {
+            padding: 1rem;
+        }
+        
+        /* Smaller icons and text on very small screens */
+        .subdomain-item {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.8rem;
+        }
+    }
+    
+    /* Tablet adjustments */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .main-header {
+            font-size: 3rem;
+        }
+        
+        .modern-card {
+            padding: 2rem;
+        }
+        
+        .input-container {
+            padding: 1.75rem;
+        }
+    }
+    
+    /* Ensure proper spacing on all devices */
+    .stMarkdown {
+        margin-bottom: 1rem;
+    }
+    
+    /* Responsive grid for subdomain display */
+    @media (max-width: 768px) {
+        .stColumns:has(.subdomain-item) {
+            grid-template-columns: 1fr !important;
+        }
+    }
+    
+    /* Better mobile navigation */
+    @media (max-width: 768px) {
+        .stSidebar {
+            width: 280px !important;
+        }
+        
+        .stSidebar > div {
+            padding: 1rem;
+        }
+        
+        /* Improve radio button layout on mobile */
+        .stRadio > div {
+            padding: 0.75rem !important;
+        }
+        
+        .stRadio > div > div {
+            flex-direction: column !important;
+            gap: 0.5rem !important;
+        }
+        
+        /* Better selectbox on mobile */
+        .stSelectbox > div > div {
+            min-height: 40px !important;
+        }
+        
+        /* Improve button spacing on mobile */
+        .stButton {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Make JSON displays scrollable on mobile */
+        .stJson {
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 0.8rem;
+        }
+        
+        /* Better spacing for alerts on mobile */
+        .stAlert {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+        }
+        
+        /* Responsive download buttons */
+        .stDownloadButton > button {
+            width: 100% !important;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Responsive text area */
+        .stTextArea > div > div > textarea {
+            min-height: 100px !important;
+            font-size: 0.9rem !important;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -1025,6 +1223,7 @@ if mode == "🔍 Subdomain Discovery":
     # Input section with modern styling
     with st.container():
         st.markdown('<div class="input-container">', unsafe_allow_html=True)
+        # Responsive columns: stack on mobile, side-by-side on desktop
         col1, col2 = st.columns([3, 1])
         with col1:
             domain = st.text_input("**Target Domain:**", placeholder="example.com", help="Enter the domain you want to scan (without www)")
@@ -1039,6 +1238,7 @@ else:  # Security Assessment
     # Security testing input
     with st.container():
         st.markdown('<div class="input-container">', unsafe_allow_html=True)
+        # Responsive columns: stack on mobile, side-by-side on desktop
         col1, col2 = st.columns([3, 1])
         with col1:
             security_domain = st.text_input("**Target Domain:**", placeholder="example.com", help="Enter the domain you want to assess")
@@ -1141,6 +1341,7 @@ if mode == "🔍 Subdomain Discovery" and scan_button:
                 st.markdown('</div>', unsafe_allow_html=True)
                 
                 st.markdown("### 📋 Discovered Subdomains:")
+                # Responsive: 2 columns on desktop, 1 column on mobile
                 cols = st.columns(2)
                 for i, sub in enumerate(sorted(found_subdomains)):
                     with cols[i % 2]:
